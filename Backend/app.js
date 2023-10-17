@@ -25,3 +25,23 @@ app.use('/api/categories', categoriesRoutes);
 app.use('/api/works', worksRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 module.exports = app;
+
+
+const apiUrl = 'http://localhost:5678/api/';
+
+fetch(apiUrl)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Erreur réseau : ' + response.status);
+      console.log('hello world');
+    }
+    return response.json(); // Convertit la réponse en JSON
+  })
+  .then(data => {
+    // Travaillez avec les données ici
+    console.log(data);
+    // Mettez à jour votre interface utilisateur avec les données récupérées
+  })
+  .catch(error => {
+    console.error('Erreur lors de la récupération des données :', error);
+  });
