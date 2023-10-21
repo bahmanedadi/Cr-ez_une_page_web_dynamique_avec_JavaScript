@@ -1,9 +1,9 @@
-/*const url = 'http://localhost:5678/api/works';
+const url = 'http://localhost:5678/api/works';
 
 fetch(url) // aller chercher la donnée 
 .then(response => {
     return response.json(); // extraire toutes les données
-})*/
+})
 /* Récupérez l'élément parent avec la classe "gallery"*/
 
 var galleryDiv = document.querySelector('.gallery');
