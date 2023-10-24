@@ -166,7 +166,10 @@ li:hover {
     background: #FFF;
    
 }
-
+.btn.active {
+	background-color:  #1D6154; /* Couleur de fond pour le bouton actif */
+	color: white; /* Couleur du texte pour le bouton actif */
+  }
 
 .btn_3 {
     text-align: center;

@@ -1,101 +1,90 @@
-const url = 'http://localhost:5678/api/works';
+let worksData = [];
+let categoriesData = [];
 
-/*aller chercher la donnée */
-fetch(url)
-    .then(response => {
-        return response.json(); // extraire toutes les données
-    })
-    .then(data => {
-        /*Sélectionnez l'élément de la galerie dans lequel vous souhaitez ajouter les travaux*/
-        const galerie = document.querySelector('.gallery');
+// Récupération des données des travaux
+fetch('http://localhost:5678/api/works')
+  .then(response => response.json())
+  .then(data => {
+    worksData = data;
+    /* Appel d'une fonction pour ajouter les travaux à la galerie*/
+    addWorksToGallery(worksData);
+    console.log(worksData);
+  });
 
-        /* Parcourez les données et ajoutez-les à la galerie*/
-        data.forEach(work => {
-            /* Créez un élément de figure pour chaque travail*/
-            const figure = document.createElement('figure');
+/* Récupération des données des catégories*/
+fetch('http://localhost:5678/api/categories')
+  .then(response => response.json())
+  .then(data => {
+    categoriesData = data;
+    /* Appel d'une fonction pour créer les boutons de catégorie*/
+    createCategoryButtons(categoriesData);
+  });
 
-            /* Créez un élément d'image*/
-            const image = document.createElement('img');
-            image.src = work.imageUrl;
-            image.alt = work.title;
+/* Fonction pour ajouter les travaux à la galerie*/
+function addWorksToGallery(works) {
+  const galerie = document.querySelector('.gallery');
+  galerie.innerHTML = ''; 
 
-            /* Créez un élément de légende*/
-            const legende = document.createElement('figcaption');
-            legende.textContent = work.title;
+  works.forEach(work => {
+    const figure = document.createElement('figure');
+    const image = document.createElement('img');
+    image.src = work.imageUrl;
+    image.alt = work.title;
+    const legende = document.createElement('figcaption');
+    legende.textContent = work.title;
+    figure.appendChild(image);
+    figure.appendChild(legende);
+    galerie.appendChild(figure);
+  });
+}
 
-            /* Ajoutez l'image et la légende à la figure*/
-            figure.appendChild(image);
-            figure.appendChild(legende);
+/* Fonction pour créer les boutons de catégorie*/
+function createCategoryButtons(categories) {
+    const divBtns = document.querySelector('.btns');
+    const galerie = document.querySelector('.gallery'); 
+  
+    categories.forEach(categorie => {
+      const bouton = document.createElement('button');
+      bouton.innerText = categorie.name;
+      bouton.classList.add('btn');
+      bouton.addEventListener('click', function () {
+        const categorieSelectionnee = categorie.name;
+        
+        /*Filtrer les travaux en fonction de la catégorie sélectionnée*/
+        const travauxFiltres = worksData.filter(work => work.category.name === categorieSelectionnee);
+        
+        /* Affichez les travaux filtrés dans la galerie*/
+        addWorksToGallery(travauxFiltres);
+       /* Retirez la classe "active" de tous les boutons de catégorie*/
+      const allButtons = document.querySelectorAll('.btn');
+      allButtons.forEach(button => {
+        button.classList.remove('active');
+      });
 
-            /* Ajoutez la figure à la galerie*/
-            galerie.appendChild(figure);
-        });
-    })
-
-
-
-const divBtns = document.querySelector('.btns');
-
-fetch("http://localhost:5678/api/categories")
-    .then(response => {
-        return response.json();
-    })
-    .then(data => {
-        data.forEach(categorie => {
-            console.log("categorie", categorie.name);
-            const bouton = document.createElement('button');
-            bouton.innerText = categorie.name;
-            bouton.classList.add('btn');
-            /* Action à effectuer lors du clic sur le bouton*/
-            bouton.addEventListener('click', function () {
-                const categorieSelectionnee = categorie.name;
-                const travauxFiltres = data.filter(travail => travail.category === categorieSelectionnee);
-                console.log("categorie", categorie);
-            });
-            divBtns.appendChild(bouton);
-
-        })
-    })
-
-const galerie = document.querySelector('.gallery');
-let data = [];
-/* Ajoutez un écouteur d'événements à chaque bouton*/
-divBtns.addEventListener('click', function (event) {
-    if (event.target.classList.contains('btn')) {
-        // Vérifiez si data est défini avant de filtrer les travaux
-        if (data) {
-            const categorieSelectionnee = event.target.innerText;
-            const travauxFiltres = data.filter(travail => travail.category === categorieSelectionnee);
-            galerie.innerHTML = ''; // Effacez la galerie existante avant d'ajouter de nouveaux éléments
-
-            travauxFiltres.forEach(work => {
-                const figure = document.createElement('figure');
-                /* Parcourez les travaux filtrés et ajoutez-les à la galerie*/
-                travauxFiltres.forEach(work => {
-                    const figure = document.createElement('figure');
-                    const image = document.createElement('img');
-                    image.src = work.imageUrl;
-                    image.alt = work.title;
-                    const legende = document.createElement('figcaption');
-                    legende.textContent = work.title;
-                    figure.appendChild(image);
-                    figure.appendChild(legende);
-                    galerie.appendChild(figure);
-                });
-                galerie.appendChild(figure);
-            });
-        } else {
-            console.error('Les données ne sont pas encore chargées.');
-        }
-    }
-});
-
-
-
-
-
-
-
-
-
-
+      /* Ajoutez la classe "active" uniquement au bouton cliqué*/
+      bouton.classList.add('active');
+    });
+    divBtns.appendChild(bouton);
+  });
+}
+  
+ 
+  
+  /* Fonction pour ajouter les travaux à la galerie*/
+  function addWorksToGallery(works) {
+    const galerie = document.querySelector('.gallery');
+    galerie.innerHTML = ''; 
+  
+    works.forEach(work => {
+      const figure = document.createElement('figure');
+      const image = document.createElement('img');
+      image.src = work.imageUrl;
+      image.alt = work.title;
+      const legende = document.createElement('figcaption');
+      legende.textContent = work.title;
+      figure.appendChild(image);
+      figure.appendChild(legende);
+      galerie.appendChild(figure);
+    });
+  }
+  
