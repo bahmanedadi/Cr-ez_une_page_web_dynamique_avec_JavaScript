@@ -55,6 +55,7 @@ function createCategoryButtons(categories) {
         
         /* Affichez les travaux filtrés dans la galerie*/
         addWorksToGallery(travauxFiltres);
+        console.log(travauxFiltres);
        /* Retirez la classe "active" de tous les boutons de catégorie*/
       const allButtons = document.querySelectorAll('.btn');
       allButtons.forEach(button => {

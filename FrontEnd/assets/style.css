@@ -261,3 +261,18 @@ footer nav ul {
 	margin: 2em
 }
 
+/* LOGIN */
+.login{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	height: 80vh;
+	
+
+}
+.login a{
+	text-decoration: underline;
+	margin-bottom: 100px;
+	
+}
