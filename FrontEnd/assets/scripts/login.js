@@ -1,96 +1,75 @@
 document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.querySelector('.login_form');
-    const loginMdpError = document.querySelector('.loginMdp_error');
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
-    const submitButton = document.getElementById('submit');
     const loginEmailError = document.querySelector('.loginEmail_error');
-    const loginErreur= document.querySelector('.error');
+    const loginMdpError = document.querySelector('.loginMdp_error');
+    const loginErreur = document.querySelector('.error');
 
-    /* Gérer la soumission du formulaire*/
     loginForm.addEventListener('submit', async function (e) {
-        e.preventDefault(); 
- /* Efface les messages d'erreur précédents*/
-        loginEmailError.textContent = "";
-        loginMdpError.textContent = "";
-        loginErreur.textContent="";
+        e.preventDefault();
+
+        loginEmailError.textContent = '';
+        loginMdpError.textContent = '';
+        loginErreur.textContent = '';
 
         const email = emailInput.value;
         const password = passwordInput.value;
-        console.log("Email saisi :", email);
-        console.log("Mot de passe saisi :", password);
-        /* Validation de l'email */
-       if (!email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/g)) {
-            console.log('Validation de l\'email a échoué.');
-            const p = document.createElement('p');
-            p.innerHTML = 'Veuillez entrer une adresse email valide';
-            loginEmailError.appendChild(p);
 
-            return;
-      }
-
-        /* Validation du mot de passe*/
-        if (password.length < 6 || !password.match(/^[a-zA-Z0-9]+$/g)) {
-            const p = document.createElement('p');
-            p.innerHTML = 'Veuillez entrer un mot de passe valide';
-            loginMdpError.appendChild(p);
-
+        if (!validateEmail(email)) {
+            showError(loginEmailError, 'Veuillez entrer une adresse email valide');
             return;
         }
 
-        /* Si les validations passent, envoyez les données d'authentification au serveur via fetch*/
-        const userData = {
-            email: email,
-            password: password
-        };
-        console.log(userData);
+        if (!validatePassword(password)) {
+            showError(loginMdpError, 'Veuillez entrer un mot de passe valide');
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:5678/api/users/login', {
-              method: 'POST',
-              headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(userData)
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
             });
-     
-            if (response.status === 200) {
-              const responseData = await response.json();
-              
-              /* stocker le token et rediriger l'utilisateur*/
-              console.log('Connexion réussie. Token :', responseData.token);
-              localStorage.setItem("token",responseData.token);
 
-              /* Redirection vers la page d'acceuil*/
+            const responseData = await response.json();
+
+            if (response.status === 200) {
+                localStorage.setItem('token', responseData.token);
                 window.location.href = 'index.html';
             } else if (response.status === 401) {
-              const errorData = await response.json();
-
-              /* Connexion non autorisée*/
-              const p = document.createElement('p');
-              p.innerHTML = 'Not Authorized';
-              loginErreur.appendChild(p);
-
+                showError('Not Authorized');
             } else if (response.status === 404) {
-              const errorData = await response.json();
-              /* Utilisateur non trouvé*/
-              const p = document.createElement('p');
-              p.innerHTML = 'User not found';
-              loginErreur.appendChild(p);
+                showError('User not found');
             } else {
-              /* Autres erreurs*/
-              throw new Error('Erreur de requête');
+                throw new Error('Erreur de requête');
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Une erreur s\'est produite :', error);
-          }
+        }
     });
-    /* Gérer le cas où l'utilisateur est déjà connecté*/
+
+
+
     if (localStorage.getItem('token')) {
-        localStorage.removeItem('token');
-        const p = document.createElement('p');
-        p.innerHTML = 'Vous avez été déconnecté, veuillez vous reconnecter';
-        loginEmailError.appendChild(p);
+        showError(loginEmailError, 'Vous avez été déconnecté, veuillez vous reconnecter');
     }
 
+    function validateEmail(email) {
+        return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-z]{2,4}$/g.test(email);
+    }
+
+    function validatePassword(password) {
+        return /^[a-zA-Z0-9]+$/g.test(password) && password.length >= 6;
+    }
+
+    function showError(element, message) {
+        const p = document.createElement('p');
+        p.innerHTML = message;
+        element.appendChild(p);
+    }
 });
