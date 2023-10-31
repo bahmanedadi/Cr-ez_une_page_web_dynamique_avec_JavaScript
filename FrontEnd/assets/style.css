@@ -381,14 +381,11 @@ footer nav ul {
 	justify-content: center;
 	align-items: center;
 	height: 80vh;
-
-
 }
 
 .login a {
 	text-decoration: underline;
 	margin-bottom: 100px;
-
 }
 
 .login_form {
@@ -427,7 +424,9 @@ footer nav ul {
 }
 
 /* Style de base pour les messages d'erreur */
-.loginEmail_error,.loginMdp_error,.error {
+.loginEmail_error,
+.loginMdp_error,
+.error {
 	color: #ff0000;
 	font-size: 14px;
 	margin-top: 15px;
@@ -436,4 +435,48 @@ footer nav ul {
 .error {
 	margin-bottom: 45px;
 	font-size: 20px;
+}
+
+#banner {
+	background-color: #f1f1f1;
+	padding: 20px;
+	text-align: center;
+	font-size: 18px;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+	background-color: #fefefe;
+    margin: 53% auto;
+   /* width: 630px;*/
+   text-align: center;
+    height: 384px;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 68%;
+}
+
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
 }

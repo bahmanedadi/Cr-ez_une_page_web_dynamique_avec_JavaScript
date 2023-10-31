@@ -13,17 +13,28 @@
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="./assets/scripts/index.js" defer></script>
 </head>
+<div id="myModal" class="modal">
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<!-- Contenu de la modale -->
+		<h2>Galerie photo</h2>
+		<!-- Formulaire ou contenu supplémentaire -->
+		<input type="submit" value="Ajouter une photo">
+	</div>
+</div>
 
 <body>
 	<header>
+		 
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
 			<ul>
 				<li>projets</li>
 				<li>contact</li>
-				<a href="login.html">
-					<li class="js-alredy-logged">login</li>
-				</a>
+
+			<li id="login" class="js-alredy-logged"></li>
+
+
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
@@ -50,7 +61,6 @@
 				<button class="btn_1 btn">Tous</button>
 			</div>
 			<div class="gallery">
-
 			</div>
 		</section>
 		<section id="contact">
