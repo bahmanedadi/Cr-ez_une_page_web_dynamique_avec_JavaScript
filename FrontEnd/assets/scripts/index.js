@@ -72,8 +72,8 @@ function createCategoryButtons(categories) {
 
 
 /* Fonction pour ajouter les travaux à la galerie*/
-function addWorksToGallery(works) {
-    const galerie = document.querySelector('.gallery');
+function addWorksToGallery(works, target) {
+    const galerie = document.querySelector(target);
     galerie.innerHTML = '';
 
     works.forEach(work => {
@@ -108,34 +108,44 @@ boutonTous.addEventListener('click', function () {
 
 if (localStorage.getItem("token")) {
     document.getElementById("login").innerHTML = '<a id="logout">logout</a>';
-    /// Pour rendre la div btns visible
-    document.querySelector('.btns').style.display = 'none';
-    // Sélectionnez l'élément de la modale et le bouton pour la fermer
-const modal = document.getElementById("myModal");
-const closeButton = document.querySelector(".close");
+    const modal = document.getElementById("myModal");
+    const closeButton = document.querySelector(".close");
 
+    // Afficher la modal
+    modal.style.display = "block";
 
-
-// Affichez la modale
-modal.style.display = "block";
-
-// Fermez la modale lorsque l'utilisateur clique sur le bouton de fermeture
-closeButton.addEventListener("click", () => {
-    modal.style.display = "none";
-});
-
-// Fermez la modale lorsque l'utilisateur clique en dehors de la modale
-window.addEventListener("click", (event) => {
-    if (event.target === modal) {
+    // Fermer la modal lorsque l'utilisateur clique sur le bouton de fermeture
+    closeButton.addEventListener("click", () => {
         modal.style.display = "none";
-    }
-});
+    });
+
+    // Fermer la modal lorsque l'utilisateur clique en dehors de la modal
+    window.addEventListener("click", (event) => {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+    // Mettez à jour la modal avec les travaux
+    addWorksToModal(worksData);
 
     document.getElementById("logout").addEventListener("click", () => {
         localStorage.removeItem("token");
-        document.getElementById("login").innerHTML = '<a href="login.html">login</a>'
+        document.getElementById("login").innerHTML = '<a href="login.html">logout</a>';
     });
 } else {
-    document.getElementById("login").innerHTML = '<a href="login.html">login</a>'
+    document.getElementById("login").innerHTML = '<a href="login.html">login</a>';
     document.querySelector('.btns').style.display = 'block';
+}
+
+function addWorksToModal(works) {
+    const galerie = document.querySelector('.modal-content');
+
+    works.forEach(work => {
+        const figure = document.createElement('figure');
+        const image = document.createElement('img');
+        image.src = work.imageUrl;
+        figure.appendChild(image);
+        galerie.appendChild(figure);
+    });
 }

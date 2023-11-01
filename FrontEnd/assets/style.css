@@ -457,15 +457,20 @@ footer nav ul {
 }
 
 .modal-content {
-	background-color: #fefefe;
-    margin: 53% auto;
-   /* width: 630px;*/
-   text-align: center;
+	z-index: 2;
+    background-color: #fefefe;
+    margin: 0 auto; /* Centre horizontalement */
+    position: absolute;
+    top: calc(100% + 70px); /* Position à 100% du haut de la fenêtre + 70 pixels de décalage vers le bas */
+    left: 50%; /* Position à 50% du côté gauche de la fenêtre */
+    transform: translate(-50%, -50%); /* Déplacez la modal de moitié de sa propre largeur et hauteur */
+    text-align: center;
     height: 384px;
     padding: 20px;
     border: 1px solid #888;
-    width: 68%;
+    width: 58%;
 }
+
 
 .close {
 	color: #aaaaaa;
@@ -478,5 +483,5 @@ footer nav ul {
 .close:focus {
 	color: #000;
 	text-decoration: none;
-	cursor: pointer;
+	
 }
