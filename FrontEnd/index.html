@@ -12,22 +12,25 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="./assets/scripts/index.js" defer></script>
+	<script src="./assets/scripts/modale.js" defer></script>
 </head>
 
 
 <body>
 	<header>
 		
-		 
+			<div id="banner">
+				<i class="fa-light fa-pen-to-square"></i>
+				mode edition
+				<i class="fa-regular fa-pen-to-square " style="color: white;"></i>
+			</div>
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
 			<ul>
 				<li>projets</li>
 				<li>contact</li>
 
-			<li id="login" class="js-alredy-logged"></li>
-
-
+				<li id="login" class="js-alredy-logged"></li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
@@ -70,7 +73,6 @@
 			</form>
 		</section>
 	</main>
-
 	<footer>
 		<nav>
 			<ul>
@@ -80,14 +82,13 @@
 	</footer>
 	<div id="myModal" class="modal">
 	</div>
-		<div class="modal-content">
-			<span class="close">&times;</span>
-			<!-- Contenu de la modale -->
-			<h2>Galerie photo</h2>
-			<!-- Formulaire ou contenu supplémentaire -->
-			<input type="submit" value="Ajouter une photo">
+	<div class="modal-content">
+		<h2>Galerie photo</h2>
+		<span class="close">&times;</span>
+		<!-- Contenu de la modale -->
 		
-	
+		<button id="modalButton">Ajouter une photo</button>
+		
+	</div>
 </body>
-
 </html>
