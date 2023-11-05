@@ -56,13 +56,13 @@ function createCategoryButtons(categories) {
             /* Affichez les travaux filtrés dans la galerie*/
             addWorksToGallery(travauxFiltres);
             console.log(travauxFiltres);
-            /* Retirez la classe "active" de tous les boutons de catégorie*/
+            /* Retirer la classe "active" de tous les boutons de catégorie*/
             const allButtons = document.querySelectorAll('.btn');
             allButtons.forEach(button => {
                 button.classList.remove('active');
             });
 
-            /* Ajoutez la classe "active" uniquement au bouton cliqué*/
+            /* Ajouter la classe "active" uniquement au bouton cliqué*/
             bouton.classList.add('active');
         });
         divBtns.appendChild(bouton);
@@ -91,17 +91,18 @@ function addWorksToGallery(works) {
 
 const boutonTous = document.querySelector('.btn_1');
 boutonTous.addEventListener('click', function () {
-    /*Affichez tous les travaux dans la galerie (sans filtre par catégorie)*/
+    /*Afficher tous les travaux dans la galerie (sans filtre par catégorie)*/
     addWorksToGallery(worksData);
     console.log(worksData);
 
-    /* Retirez la classe "active" de tous les boutons de catégorie */
+    /* Retirer la classe "active" de tous les boutons de catégorie */
     const allButtons = document.querySelectorAll('.btn');
     allButtons.forEach(button => {
         button.classList.remove('active');
     });
 
-    /* Ajoutez la classe "active" uniquement au bouton cliqué */
+    /* Ajouter la classe "active" uniquement au bouton cliqué */
     boutonTous.classList.add('active');
 });
+
 
