@@ -474,7 +474,7 @@ footer nav ul {
 	padding: 20px;
 	width: 630px;
 	height: 688px;
-
+	overflow: auto;
 }
 
 .modal-content h2 {
@@ -499,7 +499,7 @@ footer nav ul {
 	border-radius: 60px;
 	width: 237px;
 	height: 36px;
-	margin-top:93px ;
+	margin-top: 93px;
 	margin-bottom: 45px;
 	margin-left: 190px;
 	margin-right: 190px;
@@ -508,18 +508,20 @@ footer nav ul {
 .gallery-modal {
 	display: flex;
 	flex-wrap: wrap;
-	gap:10px;
+	gap: 10px;
 	margin-left: 100px;
 	margin-right: 100px;
 }
 
-.fa-trash-alt:before, .fa-trash-can:before {
+.fa-trash-alt:before,
+.fa-trash-can:before {
 	/* position: relative; */
 	color: white;
 	background-color: black;
 	padding: 5px;
 	border-radius: 20%;
-  }
+}
+
 .close {
 	position: absolute;
 	top: 0;

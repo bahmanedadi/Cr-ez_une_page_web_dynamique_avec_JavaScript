@@ -26,14 +26,40 @@ document.addEventListener("DOMContentLoaded", function () {
             image.src = work.imageUrl;
             image.classList.add("redimensionner");
             figure.appendChild(image);
-            galerie.appendChild(figure);
-            const p = document.createElement("p"); // Créez un élément p pour contenir l'icône
+
+            /* Créez l'icône de la poubelle*/
+            const p = document.createElement("p");
             const icon = document.createElement("i");
             icon.classList.add("fa-solid", "fa-trash-can");
             p.appendChild(icon);
-            figure.appendChild(p); // Ajoutez p avec l'icône à la figure
+            icon.addEventListener("click", async () => {
+                try {
+                    const workId = work.id;
+
+                    /* Envoyez une requête DELETE à votre API pour supprimer l'image*/
+                    const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        figure.remove();
+                    } else {
+                        console.error('Erreur lors de la suppression de l\'image.');
+                    }
+                } catch (error) {
+                    console.error('Erreur lors de la suppression de l\'image :', error);
+                }
+            });
+
+            figure.appendChild(p);
+            galerie.appendChild(figure);
         });
     }
+
 
     /* Fonction pour manipuler la modale et afficher les travaux */
     async function displayModalWithWorks() {
@@ -62,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("token")) {
         loginButton.innerHTML = '<a href="#">logout</a>';
         document.querySelector('.btns').style.display = 'none';
-        //Création de la banniére
+
         const banner = document.querySelector(".banner");
         banner.innerHTML = '<i class="fa-solid fa-pen-to-square" style="color: white;"></i>' + '<h2>Mode édition</h2>';
         banner.classList.add("visibleBanner");
@@ -72,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
         boutonEdit.innerHTML = '<i class="fa-solid fa-pen-to-square" style="color:black;";></i>' + '<h2 >modifier<h2/>';
         boutonEdit.classList.add("boutonEdite");
         portfolio.appendChild(boutonEdit);
-       
+
         loginButton.addEventListener("click", (e) => {
             e.preventDefault();
             localStorage.removeItem("token");
@@ -84,13 +110,23 @@ document.addEventListener("DOMContentLoaded", function () {
             displayModalWithWorks();
         });
 
-
-        // Afficher la modale avec les travaux
+        ajouterPhoto();
 
     } else {
         loginButton.innerHTML = '<a href="login.html">login</a>';
         modal.style.display = "none";
 
+
     }
 });
 
+async function ajouterPhoto() {
+    const boutonAjoutPhoto = document.getElementById("modalButton");
+    const modalContenu = document.querySelector(".gallery-modal");
+
+    boutonAjoutPhoto.addEventListener('click', () => {
+        modalContenu.style.display = "none";
+
+    });
+
+}
