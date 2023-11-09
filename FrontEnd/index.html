@@ -79,23 +79,45 @@
 		<div class="modal-content">
 			<h2>Galerie photo</h2>
 			<span class="close">&times;</span>
-			<div class="gallery-modal"></div>
+			<div class="gallery-modal">
+				
+			</div>
+			
+			<div class="gallery-edit">
+				<h2>Ajout photo </h2>
+				<form action="/upload" method="post" class="formModal" enctype="multipart/form-data">
+
+					<div class="rectangle">
+						<i class="fa-regular fa-image "></i>
+						<label class="custom-button" for="fileInput">+ Ajouter une photo</label>
+						<input type="file" id="fileInput" onchange="chargerPhoto(this)" required>
+						<img src="#" alt="" id="photo">
+						<p>jpg, png : 4mo max</p>
+					</div>
+					<div class="form-group-title">
+						<label for="title">Titre</label>
+						<input type="text" name="title" id="title" class="js-title" required>
+					</div>
+					<div class="formCategorie">
+						<label for="categorie">Catégorie</label>
+						<select name="categorie" id="categorie" class="js-categoryId" required>
+							<option value="1">Objets</option>
+							<option value="2">Appartements</option>
+							<option value="3">Hôtels & restaurants</option>
+						</select>
+
+					</div>
+					<span class="line"></span>
+					<input type="submit" value="Valider">
+				</form>
+
+			</div>
 			<button id="modalButton">Ajouter une photo</button>
 		</div>
 	</div>
-	<div id="myModalAjoutPhoto" class="modal">
-		<div class="modal-content">
-			<h2>Ajouter une photo</h2>
-			<span class="close">&times;</span>
-			<form id="ajoutPhotoForm">
-				<!-- Ajoutez les champs nécessaires pour le téléchargement de la photo -->
-				<input type="file" name="photo" accept="image/*">
-				<button type="submit">Ajouter</button>
-			</form>
-		</div>
-	</div>
-	
-	
+
+
+
 
 </body>
 

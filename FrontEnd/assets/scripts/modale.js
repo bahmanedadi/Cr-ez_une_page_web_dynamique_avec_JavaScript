@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("token")) {
         loginButton.innerHTML = '<a href="#">logout</a>';
         document.querySelector('.btns').style.display = 'none';
-
+        document.querySelector(".line").style.display = "block";
         const banner = document.querySelector(".banner");
         banner.innerHTML = '<i class="fa-solid fa-pen-to-square" style="color: white;"></i>' + '<h2>Mode édition</h2>';
         banner.classList.add("visibleBanner");
@@ -123,10 +123,27 @@ document.addEventListener("DOMContentLoaded", function () {
 async function ajouterPhoto() {
     const boutonAjoutPhoto = document.getElementById("modalButton");
     const modalContenu = document.querySelector(".gallery-modal");
-
+    const galleryEdit = document.querySelector(".gallery-edit")
+    const modalContentH = document.querySelector(".modal-content h2")
     boutonAjoutPhoto.addEventListener('click', () => {
         modalContenu.style.display = "none";
-
+        galleryEdit.style.display = "block"
+        boutonAjoutPhoto.style.display = "none";
+        modalContentH.style.display = "none"
     });
 
 }
+const chargerPhoto = function (e) {
+    const photo = document.getElementById("photo");
+    const [imgFile] = e.files;
+
+    photo.src = URL.createObjectURL(imgFile);
+    const iconePhotoFile = document.querySelector(".fa-image");
+    iconePhotoFile.style.display = "none"
+    const boutonFile = document.querySelector(".custom-button");
+    boutonFile.style.display = "none";
+    const infoFile = document.querySelector(".rectangle p")
+    infoFile.style.display = "none"
+
+
+};

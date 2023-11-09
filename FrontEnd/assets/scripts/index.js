@@ -56,13 +56,11 @@ function createCategoryButtons(categories) {
             /* Affichez les travaux filtrés dans la galerie*/
             addWorksToGallery(travauxFiltres);
             console.log(travauxFiltres);
-            /* Retirer la classe "active" de tous les boutons de catégorie*/
-            const allButtons = document.querySelectorAll('.btn');
+             const allButtons = document.querySelectorAll('.btn');
             allButtons.forEach(button => {
                 button.classList.remove('active');
             });
 
-            /* Ajouter la classe "active" uniquement au bouton cliqué*/
             bouton.classList.add('active');
         });
         divBtns.appendChild(bouton);
