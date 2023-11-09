@@ -566,6 +566,14 @@ input#texte {
 	width: 78px;
 	height: 104px;
 }
+.arrow-left{
+	display: none;
+	position: absolute;
+	top:10px;
+	left:10px;
+	width: 21px;
+	height: 18px;
+}
 .rectangle {
     display: flex;
     flex-direction: column;

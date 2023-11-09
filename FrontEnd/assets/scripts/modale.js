@@ -130,13 +130,23 @@ async function ajouterPhoto() {
         galleryEdit.style.display = "block"
         boutonAjoutPhoto.style.display = "none";
         modalContentH.style.display = "none"
+        const btnReturn = document.createElement("a");
+        btnReturn.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
+        galleryEdit.appendChild(btnReturn);
+        btnReturn.classList.add('arrow-left');
+        btnReturn.style.display = 'block';
+        btnReturn.addEventListener('click', () => {
+               galleryEdit.style.display = "none";
+               modalContentH.style.display ="block";
+               modalContenu.style.display = "flex";
+               boutonAjoutPhoto.style.display ="block";
+        });
     });
 
 }
 const chargerPhoto = function (e) {
     const photo = document.getElementById("photo");
     const [imgFile] = e.files;
-
     photo.src = URL.createObjectURL(imgFile);
     const iconePhotoFile = document.querySelector(".fa-image");
     iconePhotoFile.style.display = "none"
@@ -144,6 +154,36 @@ const chargerPhoto = function (e) {
     boutonFile.style.display = "none";
     const infoFile = document.querySelector(".rectangle p")
     infoFile.style.display = "none"
+     // Créer un objet FormData
+     const formData = new FormData();
+     formData.append("photo", imgFile);
+
+     // Ajouter d'autres données au formulaire si nécessaire
+     formData.append("title", document.getElementById("title").value);
+     formData.append("categorie", document.getElementById("categorie").value);
+
+     // Envoyer la requête à l'API
+     fetch("URL_de_votre_API", {
+         method: "POST",
+         body: formData
+     })
+     .then(response => response.json())
+     .then(data => {
+         // Gérer la réponse de l'API ici
+         console.log(data);
+     })
+     .catch(error => {
+         // Gérer les erreurs ici
+         console.error(error);
+     });
+ }
 
 
-};
+// Empêcher le formulaire de se soumettre normalement
+form.addEventListener("submit", function(event) {
+ event.preventDefault();
+});
+
+
+
+
