@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         ajouterPhoto();
-
+       
     } else {
         loginButton.innerHTML = '<a href="login.html">login</a>';
         modal.style.display = "none";
@@ -136,54 +136,72 @@ async function ajouterPhoto() {
         btnReturn.classList.add('arrow-left');
         btnReturn.style.display = 'block';
         btnReturn.addEventListener('click', () => {
-               galleryEdit.style.display = "none";
-               modalContentH.style.display ="block";
-               modalContenu.style.display = "flex";
-               boutonAjoutPhoto.style.display ="block";
+            galleryEdit.style.display = "none";
+            modalContentH.style.display = "block";
+            modalContenu.style.display = "flex";
+            boutonAjoutPhoto.style.display = "block";
         });
     });
-
+    const btnAjouterProjet = document.querySelector(".js-add-work");
+    btnAjouterProjet.addEventListener("click",  addNewWork);
 }
-const chargerPhoto = function (e) {
-    const photo = document.getElementById("photo");
-    const [imgFile] = e.files;
-    photo.src = URL.createObjectURL(imgFile);
-    const iconePhotoFile = document.querySelector(".fa-image");
-    iconePhotoFile.style.display = "none"
-    const boutonFile = document.querySelector(".custom-button");
-    boutonFile.style.display = "none";
-    const infoFile = document.querySelector(".rectangle p")
-    infoFile.style.display = "none"
-     // Créer un objet FormData
-     const formData = new FormData();
-     formData.append("photo", imgFile);
-
-     // Ajouter d'autres données au formulaire si nécessaire
-     formData.append("title", document.getElementById("title").value);
-     formData.append("categorie", document.getElementById("categorie").value);
-
-     // Envoyer la requête à l'API
-     fetch("URL_de_votre_API", {
-         method: "POST",
-         body: formData
-     })
-     .then(response => response.json())
-     .then(data => {
-         // Gérer la réponse de l'API ici
-         console.log(data);
-     })
-     .catch(error => {
-         // Gérer les erreurs ici
-         console.error(error);
-     });
- }
+async function addNewWork(e) {
+    e.preventDefault();
+    await fetchCategories();
+    const title = document.querySelector(".js-title").value;
+    const categoryId = document.querySelector(".js-categoryId").value;
+    const image = document.querySelector(".js-image").files[0];
 
 
-// Empêcher le formulaire de se soumettre normalement
-form.addEventListener("submit", function(event) {
- event.preventDefault();
-});
+    if (title === "" || categoryId === "" || image === undefined) {
+        alert("Merci de remplir tous les champs");
+        return;
+    } else if (!await fetchCategories() === categoryId) {
+        alert("Merci de choisir une catégorie valide");
+        return;
+    } else {
+        try {
+            const formData = new FormData();
+            formData.append("title", title);
+            formData.append("category", categoryId);
+            formData.append("image", image);
 
+            const response = await fetch("http://localhost:5678/api/works", {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: formData,
+            });
 
+            if (response.status === 201) {
+                alert("Projet ajouté avec succès :)");
+                addWorksToGallery();
+             
 
+            } else if (response.status === 400) {
+                alert("Merci de remplir tous les champs");
+            } else if (response.status === 500) {
+                alert("Erreur serveur");
+            } else if (response.status === 401) {
+                alert("Vous n'êtes pas autorisé à ajouter un projet");
+                window.location.href = "login.html";
+            }
+        }
 
+        catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+async function fetchCategories() {
+
+    alert("fetchcategorie")
+    const response = await fetch('http://localhost:5678/api/categories');
+    if (!response.ok) {
+        throw new Error('La requête des catégories a échoué');
+    }
+    const categories = await response.json();
+    return categories.map(category => category.id);
+}
