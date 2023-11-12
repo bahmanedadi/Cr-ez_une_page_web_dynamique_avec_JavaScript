@@ -15,11 +15,9 @@
 	<script src="./assets/scripts/index.js" defer></script>
 	<script src="./assets/scripts/modale.js" defer></script>
 </head>
-
 <body>
 	<div class="banner"></div>
 	<header>
-
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
 			<ul>
@@ -80,36 +78,27 @@
 			<h2>Galerie photo</h2>
 			<span class="close">&times;</span>
 			<div class="gallery-modal">
-				
 			</div>
-			
 			<div class="gallery-edit">
 				<h2>Ajout photo </h2>
-				<form  method="post" class="formModal" enctype="multipart/form-data">
-
+				<form method="post" class="formModal" enctype="multipart/form-data">
 					<div class="rectangle">
-						
 						<label for="photo">+ Ajouter une photo</label>
 						<input type="file" name="photo" id="photo" class="js-image">
-						
 					</div>
 					<div class="form-group-title">
 						<label for="title">Titre</label>
-						<input type="text" name="title" id="title"  class="js-title" required>
+						<input type="text" name="title" id="title" class="js-title" required>
 					</div>
 					<div class="formCategorie">
 						<label for="categorie">Catégorie</label>
 						<select name="categorie" id="categorie" class="js-categoryId" required>
-							<option value="1">Objets</option>
-							<option value="2">Appartements</option>
-							<option value="3">Hôtels & restaurants</option>
+							
 						</select>
-
 					</div>
 					<span class="line"></span>
 					<input type="submit" value="Valider" class="js-add-work">
 				</form>
-
 			</div>
 			<button id="modalButton">Ajouter une photo</button>
 		</div>

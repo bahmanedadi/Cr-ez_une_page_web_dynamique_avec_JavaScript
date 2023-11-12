@@ -41,7 +41,7 @@ function addWorksToGallery(works) {
 /* Fonction pour créer les boutons de catégorie*/
 function createCategoryButtons(categories) {
     const divBtns = document.querySelector('.btns');
-    const galerie = document.querySelector('.gallery');
+    
 
     categories.forEach(categorie => {
         const bouton = document.createElement('button');
