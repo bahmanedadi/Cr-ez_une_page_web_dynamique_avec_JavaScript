@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    /* Vérifier si l'utilisateur est connecté */
+ /* Vérifier si l'utilisateur est connecté */
     if (localStorage.getItem("token")) {
         loginButton.innerHTML = '<a href="#">logout</a>';
         document.querySelector('.btns').style.display = 'none';
