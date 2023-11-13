@@ -1,5 +1,7 @@
 let worksData = [];
 let categoriesData = [];
+const divBtns = document.querySelector('.btns');
+const galerie = document.querySelector('.gallery');
 
 /* Récupération des données des travaux*/
 fetch('http://localhost:5678/api/works')
@@ -17,7 +19,7 @@ fetch('http://localhost:5678/api/categories')
     .then(data => {
         categoriesData = data;
         /* Appel d'une fonction pour créer les boutons de catégorie*/
-        createCategoryButtons(categoriesData);
+        createCategory(categoriesData);
     });
 
 /* Fonction pour ajouter les travaux à la galerie*/
@@ -39,9 +41,8 @@ function addWorksToGallery(works) {
 }
 
 /* Fonction pour créer les boutons de catégorie*/
-function createCategoryButtons(categories) {
-    const divBtns = document.querySelector('.btns');
-    
+function createCategory(categories) {
+
 
     categories.forEach(categorie => {
         const bouton = document.createElement('button');
@@ -56,22 +57,18 @@ function createCategoryButtons(categories) {
             /* Affichez les travaux filtrés dans la galerie*/
             addWorksToGallery(travauxFiltres);
             console.log(travauxFiltres);
-             const allButtons = document.querySelectorAll('.btn');
+            const allButtons = document.querySelectorAll('.btn');
             allButtons.forEach(button => {
                 button.classList.remove('active');
             });
-
             bouton.classList.add('active');
         });
         divBtns.appendChild(bouton);
     });
 }
 
-
-
 /* Fonction pour ajouter les travaux à la galerie*/
 function addWorksToGallery(works) {
-    const galerie = document.querySelector('.gallery');
     galerie.innerHTML = '';
 
     works.forEach(work => {
@@ -92,7 +89,6 @@ boutonTous.addEventListener('click', function () {
     /*Afficher tous les travaux dans la galerie (sans filtre par catégorie)*/
     addWorksToGallery(worksData);
     console.log(worksData);
-
     /* Retirer la classe "active" de tous les boutons de catégorie */
     const allButtons = document.querySelectorAll('.btn');
     allButtons.forEach(button => {

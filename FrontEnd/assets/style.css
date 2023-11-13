@@ -227,8 +227,6 @@ li:hover {
 	margin-bottom: 1em;
 }
 
-
-
 /*********** Le Style des boutons spécifiques ***********/
 .btns {
 	display: flex;
@@ -272,7 +270,6 @@ li:hover {
 .btn.active {
 	background-color: #1D6154;
 	color: white;
-
 }
 
 .btn_3 {
@@ -289,8 +286,6 @@ li:hover {
 	background: #FFF;
 	width: 157px;
 }
-
-
 .btn_4 {
 	font-size: 16px;
 	font-style: normal;
@@ -311,23 +306,19 @@ li:hover {
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 }
-
 .gallery img {
 	width: 100%;
 	height: 100%;
-
 }
 
 #contact {
 	width: 50%;
 	margin: auto;
 }
-
 #contact>* {
 	text-align: center;
 
 }
-
 #contact h2 {
 	margin-bottom: 20px;
 }
@@ -436,7 +427,6 @@ footer nav ul {
 	width: 180px;
 	text-align: center;
 	border-radius: 60px;
-
 }
 
 /* Style de base pour les messages d'erreur */
@@ -453,10 +443,7 @@ footer nav ul {
 	font-size: 20px;
 }
 
-
-
 /***********La modale **********/
-
 .modal {
 	display: none;
 	position: fixed;
@@ -466,7 +453,6 @@ footer nav ul {
 	height: 100%;
 	background: rgba(0, 0, 0, 0.30);
 }
-
 
 .modal-content {
 	position: relative;
@@ -537,9 +523,7 @@ input#texte {
 	margin-left: 98px;
 }
 
-.fa-trash-alt:before,
-.fa-trash-can:before {
-	/* position: relative; */
+.fa-trash-alt:before,.fa-trash-can:before {
 	color: white;
 	background-color: black;
 	padding: 5px;
@@ -556,11 +540,9 @@ input#texte {
 	cursor: pointer;
 }
 
-.close:hover,
-.close:focus {
+.close:hover,.close:focus {
 	color: #000;
 	text-decoration: none;
-
 }
 
 .redimensionner {
@@ -587,8 +569,6 @@ input#texte {
     background: #E8F1F6;
     margin-left: 105px;
     margin-bottom: 30px;
-
-
 }
 
 .rectangle label {
@@ -600,7 +580,6 @@ input#texte {
     font-weight: 500;
     line-height: normal;
     padding: 10px 33px 10px 33px;
-
 }
 
 .rectangle p {
@@ -610,7 +589,6 @@ input#texte {
     font-weight: 400;
     margin-bottom: 19px;
 }
-
 .formModal {
     display: flex;
     flex-direction: column;
@@ -626,7 +604,6 @@ input#texte {
     margin-bottom: 21px;
 }
 
-
 .formModal select {
     margin-left: 105px;
     width: 69%;
@@ -635,7 +612,6 @@ input#texte {
     background: #FFF;
     box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
     margin-bottom: 47px;
-
 }
 
 .form-group-title label {
@@ -647,7 +623,6 @@ input#texte {
     font-weight: 500;
     line-height: normal;
     margin-left: 105px;
-
 }
 
 .formModal input[type="submit"] {
@@ -669,7 +644,6 @@ input#texte {
     margin-top: 24px;
 }
 
-
 .formCategorie label {
     margin-top: 21px;
     padding-top: 10px;
@@ -680,8 +654,6 @@ input#texte {
     font-weight: 500;
     line-height: normal;
     margin-left: 105px;
-
-
 }
 
 .custom-button {
@@ -697,10 +669,10 @@ input#texte {
 }
 
 #photo {
+	display: none;
     width: 129px;
     height: 193px;
     background: url(<path-to-image>), lightgray 50% / cover no-repeat;
-
 }
 
 .line {
@@ -717,16 +689,6 @@ input#texte {
     background: #A7A7A7;
 }
 
-
-
-
-
-
-
-
-
-
-
 /*******La banniere *******/
 .banner {
 	display: none;
@@ -737,9 +699,7 @@ input#texte {
 	width: 100%;
 	height: 59px;
 	background: #fff;
-
 }
-
 .visibleBanner {
 	background: black;
 }
@@ -750,7 +710,6 @@ input#texte {
 	flex-shrink: 0;
 	color: #FFF;
 }
-
 .banner h2 {
 	color: #FFF;
 	text-align: center;
@@ -762,7 +721,6 @@ input#texte {
 }
 
 /*******Le bouton edite **********/
-
 .boutonEdite {
 	position: absolute;
 	top: 7px;

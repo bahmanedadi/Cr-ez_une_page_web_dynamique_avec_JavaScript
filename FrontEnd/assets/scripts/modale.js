@@ -1,7 +1,11 @@
+const modal = document.getElementById("myModal");
+const closeButton = document.querySelector(".close");
+const loginButton = document.getElementById("loginButton");
+const titleInput = document.getElementById('title');
+const photoInput = document.getElementById('photo');
+const categorieInput = document.getElementById('categorie');
+const submitButton = document.getElementById('submitButton');
 document.addEventListener("DOMContentLoaded", function () {
-    const modal = document.getElementById("myModal");
-    const closeButton = document.querySelector(".close");
-    const loginButton = document.getElementById("loginButton");
 
     /* Fonction pour récupérer les données des travaux depuis l'API */
     async function fetchWorksData() {
@@ -30,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
             /* Créez l'icône de la poubelle*/
             const p = document.createElement("p");
             const icon = document.createElement("i");
-            icon.classList.add("fa-solid", "fa-trash-can");
+            icon.classList.add("fa-solid","fa-trash-can");
             p.appendChild(icon);
             icon.addEventListener("click", async () => {
                 try {
@@ -88,45 +92,46 @@ document.addEventListener("DOMContentLoaded", function () {
     if (localStorage.getItem("token")) {
         loginButton.innerHTML = '<a href="#">logout</a>';
         document.querySelector('.btns').style.display = 'none';
-        document.querySelector(".line").style.display = "block";
+       
         const banner = document.querySelector(".banner");
         banner.innerHTML = '<i class="fa-solid fa-pen-to-square" style="color: white;"></i>' + '<h2>Mode édition</h2>';
         banner.classList.add("visibleBanner");
 
         const portfolio = document.getElementById("portfolio");
-        const boutonEdit = document.createElement("a");
-        boutonEdit.innerHTML = '<i class="fa-solid fa-pen-to-square" style="color:black;";></i>' + '<h2 >modifier<h2/>';
-        boutonEdit.classList.add("boutonEdite");
-        portfolio.appendChild(boutonEdit);
+        const btnEdit = document.createElement("a");
+        btnEdit.innerHTML = '<i class="fa-solid fa-pen-to-square" style="color:black;";></i>' + '<h2 >modifier<h2/>';
+        btnEdit.classList.add("boutonEdite");
+        portfolio.appendChild(btnEdit);
 
         loginButton.addEventListener("click", (e) => {
             e.preventDefault();
             localStorage.removeItem("token");
             window.location.href = "index.html";
         });
-
-        boutonEdit.addEventListener("click", () => {
+        btnEdit.addEventListener("click", () => {
             modal.style.display = "none";
             displayModalWithWorks();
         });
-
-        ajouterPhoto();
+        addPhoto();
 
     } else {
         loginButton.innerHTML = '<a href="login.html">login</a>';
         modal.style.display = "none";
     }
+    uploadFile(e);
+
 });
 
-async function ajouterPhoto() {
-    const boutonAjoutPhoto = document.getElementById("modalButton");
-    const modalContenu = document.querySelector(".gallery-modal");
+/* fonction pour ajouter une photo*/
+async function addPhoto() {
+    const btnAddPhoto = document.getElementById("modalButton");
+    const modalContent = document.querySelector(".gallery-modal");
     const galleryEdit = document.querySelector(".gallery-edit")
     const modalContentH = document.querySelector(".modal-content h2")
-    boutonAjoutPhoto.addEventListener('click', () => {
-        modalContenu.style.display = "none";
+    btnAddPhoto.addEventListener('click', () => {
+        modalContent.style.display = "none";
         galleryEdit.style.display = "block"
-        boutonAjoutPhoto.style.display = "none";
+        btnAddPhoto.style.display = "none";
         modalContentH.style.display = "none"
         const btnReturn = document.createElement("a");
         btnReturn.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
@@ -136,19 +141,27 @@ async function ajouterPhoto() {
         btnReturn.addEventListener('click', () => {
             galleryEdit.style.display = "none";
             modalContentH.style.display = "block";
-            modalContenu.style.display = "flex";
-            boutonAjoutPhoto.style.display = "block";
+            modalContent.style.display = "flex";
+            btnAddPhoto.style.display = "block";
         });
     });
-    const btnAjouterProjet = document.querySelector(".js-add-work");
-    btnAjouterProjet.addEventListener("click", addNewWork)
-    fetchCategories()
+    titleInput.addEventListener('input', updateSubmitButton);
+    photoInput.addEventListener('change', updateSubmitButton);
+    categorieInput.addEventListener('change', updateSubmitButton);
+    submitButton.addEventListener("click", async (e) => {
+        e.preventDefault();
+        await addNewWork(e);
+        modal.style.display = "none";
+    });
+
+    fetchCategories();
 }
+/*fonction pour ajouter une nouvelle figure*/
 async function addNewWork(e) {
     e.preventDefault();
-    const title = document.querySelector(".js-title").value;
-    const categoryId = document.querySelector(".js-categoryId").value;
-    const image = document.querySelector(".js-image").files[0];
+    const title = titleInput.value;
+    const categoryId = categorieInput.value;
+    const image = photoInput.files[0];
 
     if (title === "" || categoryId === "" || image === undefined) {
         alert("Merci de remplir tous les champs");
@@ -162,6 +175,7 @@ async function addNewWork(e) {
             formData.append("title", title);
             formData.append("category", categoryId);
             formData.append("image", image);
+
             const response = await fetch("http://localhost:5678/api/works", {
                 method: "POST",
                 headers: {
@@ -182,7 +196,6 @@ async function addNewWork(e) {
                 window.location.href = "login.html";
             }
         }
-
         catch (error) {
             console.log(error);
         }
@@ -190,32 +203,60 @@ async function addNewWork(e) {
 }
 
 async function fetchCategories() {
-    const selectElement = document.getElementById("categorie");
     try {
         const response = await fetch('http://localhost:5678/api/categories');
         if (!response.ok) {
             throw new Error('La requête des catégories a échoué');
         }
         const categories = await response.json();
-
-        selectElement.innerHTML = '';
-
+        categorieInput.innerHTML = '';
         const defaultOption = document.createElement('option');
         defaultOption.value = '';
         defaultOption.textContent = '--veuillez choisir une categorie--';
-        selectElement.appendChild(defaultOption);
-
-        // Ajouter les catégories de l'API
+        categorieInput.appendChild(defaultOption);
+        /* Ajouter les catégories de l'API*/
         categories.forEach(category => {
             const option = document.createElement('option');
             option.value = category.id;
-            option.textContent = category.name; 
-            selectElement.appendChild(option);
+            option.textContent = category.name;
+            categorieInput.appendChild(option);
         });
-
     } catch (error) {
         console.error('Erreur de récupération des catégories :', error);
         throw error;
     }
 }
 
+/* fonction pour telecharger le fichier sous forme jpg ou png*/
+function uploadFile(e) {
+    const iconFile = document.querySelector(".fa-image");
+    iconFile.style.display = "block";
+    const btnFile = document.querySelector(".rectangle label");
+    btnFile.style.display = "block";
+    const picture = document.querySelector(".photo");
+    const infoFile = document.querySelector(".rectangle p");
+    infoFile.style.display = "block";
+    picture.src = "";
+    const [image] = e.files;
+    /* Mettez à jour l'aperçu de l'image*/
+    picture.src = URL.createObjectURL(image);
+    /* Masquez les éléments liés au téléchargement de fichier*/
+    iconFile.style.display = "none";
+    btnFile.style.display = "none";
+    infoFile.style.display = "none";
+}
+
+/*Fonction pour mettre a jour le bouton valider */
+function updateSubmitButton() {
+    const titleFilled = titleInput.value.trim() !== '';
+    const photoFilled = photoInput.files && photoInput.files[0];
+    const categorieFilled = categorieInput.value !== '';
+
+    if (titleFilled && photoFilled && categorieFilled) {
+        submitButton.disabled = false;
+        submitButton.style.backgroundColor = " #1D6154";
+    } else {
+        submitButton.disabled = true;
+        submitButton.style.backgroundColor = " #A7A7A7";
+    }
+}
