@@ -39,7 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
             icon.addEventListener("click", async () => {
                 try {
                     const workId = work.id;
-
                     /* Envoyez une requête DELETE à votre API pour supprimer l'image*/
                     const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
                         method: 'DELETE',
@@ -162,6 +161,7 @@ async function addNewWork(e) {
     const title = titleInput.value;
     const categoryId = categorieInput.value;
     const image = photoInput.files[0];
+    const maxSizeImage=4*1024*1024;
 
     if (title === "" || categoryId === "" || image === undefined) {
         alert("Merci de remplir tous les champs");

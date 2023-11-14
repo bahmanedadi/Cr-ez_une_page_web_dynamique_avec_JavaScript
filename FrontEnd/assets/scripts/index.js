@@ -18,7 +18,6 @@ fetch('http://localhost:5678/api/categories')
     .then(response => response.json())
     .then(data => {
         categoriesData = data;
-        /* Appel d'une fonction pour créer les boutons de catégorie*/
         createCategory(categoriesData);
     });
 
@@ -42,8 +41,6 @@ function addWorksToGallery(works) {
 
 /* Fonction pour créer les boutons de catégorie*/
 function createCategory(categories) {
-
-
     categories.forEach(categorie => {
         const bouton = document.createElement('button');
         bouton.innerText = categorie.name;
@@ -70,7 +67,6 @@ function createCategory(categories) {
 /* Fonction pour ajouter les travaux à la galerie*/
 function addWorksToGallery(works) {
     galerie.innerHTML = '';
-
     works.forEach(work => {
         const figure = document.createElement('figure');
         const image = document.createElement('img');
@@ -94,7 +90,6 @@ boutonTous.addEventListener('click', function () {
     allButtons.forEach(button => {
         button.classList.remove('active');
     });
-
     /* Ajouter la classe "active" uniquement au bouton cliqué */
     boutonTous.classList.add('active');
 });

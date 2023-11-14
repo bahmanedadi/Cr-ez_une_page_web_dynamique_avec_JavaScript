@@ -286,6 +286,7 @@ li:hover {
 	background: #FFF;
 	width: 157px;
 }
+
 .btn_4 {
 	font-size: 16px;
 	font-style: normal;
@@ -306,6 +307,7 @@ li:hover {
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 }
+
 .gallery img {
 	width: 100%;
 	height: 100%;
@@ -315,10 +317,12 @@ li:hover {
 	width: 50%;
 	margin: auto;
 }
+
 #contact>* {
 	text-align: center;
 
 }
+
 #contact h2 {
 	margin-bottom: 20px;
 }
@@ -460,8 +464,9 @@ footer nav ul {
 	margin: 10% auto;
 	padding: 20px;
 	width: 630px;
-	height: 578px;
+	height: 688px;
 	overflow: auto;
+	padding: 45px 80px;
 }
 
 .modal-content h2 {
@@ -469,7 +474,6 @@ footer nav ul {
 	text-align: center;
 	font-family: Work Sans;
 	font-size: 26px;
-	font-style: normal;
 	font-weight: 400;
 	line-height: normal;
 	margin-top: 60px;
@@ -478,29 +482,27 @@ footer nav ul {
 
 #modalButton {
 	font-family: 'Syne';
-	font-weight: 700;
 	color: white;
 	background-color: #1D6154;
-	text-align: center;
 	border-radius: 60px;
 	width: 237px;
 	height: 36px;
-	margin-top: 93px;
-	margin-bottom: 45px;
 	margin-left: 190px;
-	margin-right: 190px;
 }
 
 .gallery-modal {
 	display: flex;
 	flex-wrap: wrap;
+	margin-bottom: 21px;
 	gap: 10px;
-	margin-left: 100px;
-	margin-right: 100px;
+	padding-bottom: 30px;
+	border-bottom: 1px solid #B3B3B3;
+	
 }
 
 .gallery-modal figure {
 	position: relative;
+	width: calc(100%/5 - 10px)
 }
 
 i.fa-solid.fa-trash-can {
@@ -514,6 +516,12 @@ i.fa-solid.fa-trash-can {
 
 }
 
+img.photo {
+	width: 129px;
+	height: 100%;
+	object-fit: cover;
+}
+
 input#texte {
 	width: 420px;
 	height: 169px;
@@ -523,7 +531,8 @@ input#texte {
 	margin-left: 98px;
 }
 
-.fa-trash-alt:before,.fa-trash-can:before {
+.fa-trash-alt:before,
+.fa-trash-can:before {
 	color: white;
 	background-color: black;
 	padding: 5px;
@@ -540,153 +549,158 @@ input#texte {
 	cursor: pointer;
 }
 
-.close:hover,.close:focus {
+.close:hover,
+.close:focus {
 	color: #000;
 	text-decoration: none;
 }
 
 .redimensionner {
-	width: 78px;
-	height: 104px;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
-.arrow-left{
+
+.arrow-left {
 	display: none;
 	position: absolute;
-	top:10px;
-	left:10px;
+	top: 10px;
+	left: 10px;
 	width: 21px;
 	height: 18px;
 }
+
 .rectangle {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    justify-content: center;
-    align-items: center;
-    width: 68%;
-    height: 169px;
-    border-radius: 3px;
-    background: #E8F1F6;
-    margin-left: 105px;
-    margin-bottom: 30px;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	justify-content: center;
+	align-items: center;
+	width: 68%;
+	height: 169px;
+	border-radius: 3px;
+	background: #E8F1F6;
+	margin-left: 105px;
+	margin-bottom: 30px;
 }
 
 .rectangle label {
     color: #306685;
     text-align: center;
-    font-family: Work Sans;
     font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
     line-height: normal;
     padding: 10px 33px 10px 33px;
-}
-
-.rectangle p {
-    color: #444;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 400;
-    margin-bottom: 19px;
-}
-.formModal {
-    display: flex;
-    flex-direction: column;
-}
-
-.formModal input {
-    margin-left: 105px;
-    width: 68%;
-    align-items: center;
-    height: 51px;
-    background: #FFF;
-    box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
-    margin-bottom: 21px;
-}
-
-.formModal select {
-    margin-left: 105px;
-    width: 69%;
-    align-items: center;
-    height: 51px;
-    background: #FFF;
-    box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
-    margin-bottom: 47px;
-}
-
-.form-group-title label {
-    padding-top: 10px;
-    color: #3D3D3D;
-    font-family: Work Sans;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    margin-left: 105px;
-}
-
-.formModal input[type="submit"] {
-    font-family: 'Syne';
-    font-weight: 700;
-    color: white;
-    background: #A7A7A7;
-    margin: 2em auto;
-    width: 237px;
-    height: 36px;
-    text-align: center;
-    border-radius: 60px;
-    margin-top: 55px;
-}
-
-.fa-image {
-    font-size: 76px;
-    color: #CBD6DC;
-    margin-top: 24px;
-}
-
-.formCategorie label {
-    margin-top: 21px;
-    padding-top: 10px;
-    color: #3D3D3D;
-    font-family: Work Sans;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    margin-left: 105px;
-}
-
-.custom-button {
-    width: 173px;
     height: 36px;
     border-radius: 50px;
     background: #CBD6DC;
+}
+
+.rectangle p {
+	color: #444;
+	font-size: 10px;
+	font-style: normal;
+	font-weight: 400;
+	margin-bottom: 19px;
+}
+
+.formModal {
+	display: flex;
+	flex-direction: column;
+}
+
+.formModal input {
+	margin-left: 105px;
+	width: 68%;
+	align-items: center;
+	height: 51px;
+	background: #FFF;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+	margin-bottom: 21px;
+}
+
+.formModal select {
+	margin-left: 105px;
+	width: 69%;
+	align-items: center;
+	height: 51px;
+	background: #FFF;
+	box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+	margin-bottom: 47px;
+}
+
+.form-group-title label {
+	padding-top: 10px;
+	color: #3D3D3D;
+	font-family: Work Sans;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	margin-left: 105px;
+}
+
+.formModal input[type="submit"] {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background: #A7A7A7;
+	margin: 2em auto;
+	width: 237px;
+	height: 36px;
+	text-align: center;
+	border-radius: 60px;
+	margin-top: 55px;
+}
+
+.fa-image {
+	font-size: 76px;
+	color: #CBD6DC;
+	margin-top: 24px;
+}
+
+.formCategorie label {
+	margin-top: 21px;
+	padding-top: 10px;
+	color: #3D3D3D;
+	font-family: Work Sans;
+	font-size: 14px;
+	font-style: normal;
+	font-weight: 500;
+	line-height: normal;
+	margin-left: 105px;
+}
+
+.custom-button {
+	width: 173px;
+	height: 36px;
+	border-radius: 50px;
+	background: #CBD6DC;
 
 }
 
 .custom-file-input {
-    display: none;
+	display: none;
 }
 
 #photo {
 	display: none;
-    width: 129px;
-    height: 193px;
-    background: url(<path-to-image>), lightgray 50% / cover no-repeat;
+	width: 129px;
+	height: 193px;
+	background: url(<path-to-image>), lightgray 50% / cover no-repeat;
 }
 
 .line {
-    margin-left: 105px;
-    width: 68%;
-    height: 1px;
-    background: #B3B3B3;
+	margin-left: 105px;
+	width: 68%;
+	height: 1px;
+	background: #B3B3B3;
 }
 
 .valider {
-    width: 237px;
-    height: 36px;
-    border-radius: 60px;
-    background: #A7A7A7;
+	width: 237px;
+	height: 36px;
+	border-radius: 60px;
+	background: #A7A7A7;
 }
 
 /*******La banniere *******/
@@ -700,6 +714,7 @@ input#texte {
 	height: 59px;
 	background: #fff;
 }
+
 .visibleBanner {
 	background: black;
 }
@@ -710,6 +725,7 @@ input#texte {
 	flex-shrink: 0;
 	color: #FFF;
 }
+
 .banner h2 {
 	color: #FFF;
 	text-align: center;
@@ -725,8 +741,6 @@ input#texte {
 	position: absolute;
 	top: 7px;
 	display: flex;
-	justify-content: center;
-	align-items: center;
 	gap: 10px;
 	right: 346px;
 }
