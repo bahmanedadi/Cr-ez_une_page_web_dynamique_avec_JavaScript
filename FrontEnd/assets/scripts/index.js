@@ -8,7 +8,7 @@ fetch('http://localhost:5678/api/works')
     .then(response => response.json())
     .then(data => {
         worksData = data;
-        /* Appel d'une fonction pour ajouter les travaux à la galerie*/
+        /* Appel d'une fonction pour ajouter les travaux à la galerie */
         addWorksToGallery(worksData);
         console.log(worksData);
     });
@@ -21,7 +21,7 @@ fetch('http://localhost:5678/api/categories')
         createCategory(categoriesData);
     });
 
-/* Fonction pour ajouter les travaux à la galerie*/
+/*******  Fonction pour ajouter les travaux à la galerie *********/
 function addWorksToGallery(works) {
     const galerie = document.querySelector('.gallery');
     galerie.innerHTML = '';
@@ -39,7 +39,7 @@ function addWorksToGallery(works) {
     });
 }
 
-/* Fonction pour créer les boutons de catégorie*/
+/******  Fonction pour créer les boutons de catégorie *******/
 function createCategory(categories) {
     categories.forEach(categorie => {
         const bouton = document.createElement('button');
@@ -64,7 +64,7 @@ function createCategory(categories) {
     });
 }
 
-/* Fonction pour ajouter les travaux à la galerie*/
+/****** Fonction pour ajouter les travaux à la galerie ******/
 function addWorksToGallery(works) {
     galerie.innerHTML = '';
     works.forEach(work => {
@@ -78,6 +78,7 @@ function addWorksToGallery(works) {
         figure.appendChild(legende);
         galerie.appendChild(figure);
     });
+   
 }
 
 const boutonTous = document.querySelector('.btn_1');
@@ -92,6 +93,8 @@ boutonTous.addEventListener('click', function () {
     });
     /* Ajouter la classe "active" uniquement au bouton cliqué */
     boutonTous.classList.add('active');
+   
+   
 });
 
 

@@ -422,14 +422,7 @@ footer nav ul {
 }
 
 .login_form input[type=submit] {
-	font-family: "Syne";
-	font-weight: 700;
-	color: white;
-	background-color: #1D6154;
 	border: 2px solid #1D6154;
-	margin: 3em auto;
-	width: 180px;
-	text-align: center;
 	border-radius: 60px;
 }
 
@@ -443,7 +436,6 @@ footer nav ul {
 }
 
 .error {
-	margin-bottom: 45px;
 	font-size: 20px;
 }
 
@@ -462,7 +454,6 @@ footer nav ul {
 	position: relative;
 	background-color: #fff;
 	margin: 10% auto;
-	padding: 20px;
 	width: 630px;
 	height: 688px;
 	overflow: auto;
@@ -497,7 +488,7 @@ footer nav ul {
 	gap: 10px;
 	padding-bottom: 30px;
 	border-bottom: 1px solid #B3B3B3;
-	
+
 }
 
 .gallery-modal figure {
@@ -585,14 +576,14 @@ input#texte {
 }
 
 .rectangle label {
-    color: #306685;
-    text-align: center;
-    font-size: 14px;
-    line-height: normal;
-    padding: 10px 33px 10px 33px;
-    height: 36px;
-    border-radius: 50px;
-    background: #CBD6DC;
+	color: #306685;
+	text-align: center;
+	font-size: 14px;
+	line-height: normal;
+	padding: 10px 33px 10px 33px;
+	height: 36px;
+	border-radius: 50px;
+	background: #CBD6DC;
 }
 
 .rectangle p {

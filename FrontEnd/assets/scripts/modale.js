@@ -7,8 +7,8 @@ const categorieInput = document.getElementById('categorie');
 const submitButton = document.getElementById('submitButton');
 document.addEventListener("DOMContentLoaded", function () {
 
-    /* Fonction pour récupérer les données des travaux depuis l'API */
-    async function fetchWorksData() {
+ /*****  Fonction pour récupérer les données des travaux depuis l'API ******/
+ async function fetchWorksData() {
         try {
             const response = await fetch('http://localhost:5678/api/works');
             const data = await response.json();
@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    /* Fonction pour ajouter les travaux à la modale */
-    function addWorksToModal(works) {
+ /*****  Fonction pour ajouter les travaux à la modale ******/
+ function addWorksToModal(works) {
         const galerie = document.querySelector('.gallery-modal');
         galerie.innerHTML = '';
 
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* Fonction pour manipuler la modale et afficher les travaux */
+/******* Fonction pour manipuler la modale et afficher les travaux ******/
     async function displayModalWithWorks() {
         try {
             const worksData = await fetchWorksData();
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
- /* Vérifier si l'utilisateur est connecté */
+ /******  Vérifier si l'utilisateur est connecté *******/
     if (localStorage.getItem("token")) {
         loginButton.innerHTML = '<a href="#">logout</a>';
         document.querySelector('.btns').style.display = 'none';
@@ -117,11 +117,11 @@ document.addEventListener("DOMContentLoaded", function () {
         loginButton.innerHTML = '<a href="login.html">login</a>';
         modal.style.display = "none";
     }
-    uploadFile(e);
+    uploadFile();
 
 });
 
-/* fonction pour ajouter une photo*/
+/*******  fonction pour ajouter une photo ********/
 async function addPhoto() {
     const btnAddPhoto = document.getElementById("modalButton");
     const modalContent = document.querySelector(".gallery-modal");
@@ -155,7 +155,7 @@ async function addPhoto() {
 
     fetchCategories();
 }
-/*fonction pour ajouter une nouvelle figure*/
+/******* fonction pour ajouter une nouvelle figure *******/
 async function addNewWork(e) {
     e.preventDefault();
     const title = titleInput.value;
@@ -186,7 +186,7 @@ async function addNewWork(e) {
 
             if (response.status === 201) {
                 alert("Projet ajouté avec succès :)");
-
+                
             } else if (response.status === 400) {
                 alert("Merci de remplir tous les champs");
             } else if (response.status === 500) {
@@ -227,8 +227,9 @@ async function fetchCategories() {
     }
 }
 
-/* fonction pour telecharger le fichier sous forme jpg ou png*/
+/*** **** fonction pour telecharger le fichier sous forme jpg ou png *******/
 function uploadFile(e) {
+    if (photoInput.files && photoInput.files.length > 0) {
     const iconFile = document.querySelector(".fa-image");
     iconFile.style.display = "block";
     const btnFile = document.querySelector(".rectangle label");
@@ -244,9 +245,10 @@ function uploadFile(e) {
     iconFile.style.display = "none";
     btnFile.style.display = "none";
     infoFile.style.display = "none";
+    }
 }
 
-/*Fonction pour mettre a jour le bouton valider */
+/******* Fonction pour mettre a jour le bouton valider ******/
 function updateSubmitButton() {
     const titleFilled = titleInput.value.trim() !== '';
     const photoFilled = photoInput.files && photoInput.files[0];
