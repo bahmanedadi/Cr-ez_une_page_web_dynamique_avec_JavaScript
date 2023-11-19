@@ -14,33 +14,22 @@ worksGallery();
 /* Récupération des données des travaux */
 async function worksGallery() {
     try {
-       
         const response = await fetch('http://localhost:5678/api/works');
         if (!response.ok) {
             throw new Error('La requête pour les travaux a échoué');
         }
-        worksData = await response.json();
-         addWorksToGallery(worksData); 
-       
+        const data = await response.json();
+        worksData = data;
+        addWorksToGallery(worksData);
+
     } catch (error) {
         console.error('Erreur lors de la récupération des travaux :', error);
     }
 }
 
-
-/* Récupération des données des catégories */
-fetch('http://localhost:5678/api/categories')
-    .then(response => response.json())
-    .then(data => {
-        categoriesData = data;
-        createCategory(categoriesData);
-    });
-
 /******* Fonction pour ajouter les travaux à la galerie *********/
 function addWorksToGallery(works) {
-    
-        galerie.innerHTML = '';
-
+    galerie.innerHTML = '';
     works.forEach(work => {
         const figure = document.createElement('figure');
         const image = document.createElement('img');
@@ -54,6 +43,14 @@ function addWorksToGallery(works) {
     });
 }
 
+/******** Récupération des données des catégories **********/
+fetch('http://localhost:5678/api/categories')
+    .then(response => response.json())
+    .then(data => {
+        categoriesData = data;
+        createCategory(categoriesData);
+    });
+
 /****** Fonction pour créer les boutons de catégorie *******/
 function createCategory(categories) {
     categories.forEach(categorie => {
@@ -61,14 +58,13 @@ function createCategory(categories) {
         bouton.innerText = categorie.name;
         bouton.classList.add('btn');
         bouton.addEventListener('click', function () {
-            const categorieSelectionnee = categorie.name;
+            const selectedCategory = categorie.name;
 
             /* Filtrer les travaux en fonction de la catégorie sélectionnée */
-            const travauxFiltres = worksData.filter(work => work.category.name === categorieSelectionnee);
+            const worksFiltres = worksData.filter(work => work.category.name === selectedCategory);
 
             /* Afficher les travaux filtrés dans la galerie */
-            addWorksToGallery(travauxFiltres);
-            console.log(travauxFiltres);
+            addWorksToGallery(worksFiltres);
             const allButtons = document.querySelectorAll('.btn');
             allButtons.forEach(button => {
                 button.classList.remove('active');
@@ -83,7 +79,7 @@ const boutonTous = document.querySelector('.btn_1');
 boutonTous.addEventListener('click', function () {
     /* Afficher tous les travaux dans la galerie (sans filtre par catégorie) */
     addWorksToGallery(worksData);
-    console.log(worksData);
+
     /* Retirer la classe "active" de tous les boutons de catégorie */
     const allButtons = document.querySelectorAll('.btn');
     allButtons.forEach(button => {
@@ -94,87 +90,6 @@ boutonTous.addEventListener('click', function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-
-  /*****  Fonction pour récupérer les données des travaux depuis l'API ******/
-    async function fetchWorksData() {
-        try {
-            const response = await fetch('http://localhost:5678/api/works');
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            console.error('Erreur de récupération des données des travaux :', error);
-            throw error;
-        }
-    }
- async function addWorksToModal(works) {
-        console.log('addWorksToModal called with works:', works);
-        const galerie = document.querySelector('.gallery-modal');
-       galerie.innerHTML = '';
-    
-        works.forEach(work => {
-            const figure = document.createElement('figure');
-            const image = document.createElement('img');
-            image.src = work.imageUrl;
-            image.classList.add("redimensionner");
-            figure.appendChild(image);
-    
-            /* Créez l'icône de la poubelle*/
-            const p = document.createElement("p");
-            const icon = document.createElement("i");
-            icon.classList.add("fa-solid", "fa-trash-can");
-            p.appendChild(icon);
-    
-            icon.addEventListener("click", async () => {
-                try {
-                    const workId = work.id;
-                    /* Envoyez une requête DELETE à votre API pour supprimer l'image*/
-                    const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${localStorage.getItem('token')}`
-                        }
-                    });
-    
-                    if (response.ok) {
-                        figure.remove();
-                        worksGallery();
-                    } else {
-                        console.error('Erreur lors de la suppression de l\'image.');
-                    }
-                } catch (error) {
-                    console.error('Erreur lors de la suppression de l\'image :', error);
-                }
-            });
-    
-            figure.appendChild(p);
-            galerie.appendChild(figure);
-        });
-    }
-
-
-    /******* Fonction pour manipuler la modale et afficher les travaux ******/
-    async function displayModalWithWorks() {
-        try {
-            const worksData = await fetchWorksData();
-            addWorksToModal(worksData);
-            modal.style.display = "block";
-
-            /* Fermer la modale lorsque l'utilisateur clique sur le bouton de fermeture */
-            closeButton.addEventListener("click", () => {
-                modal.style.display = "none";
-            });
-
-            /* Fermer la modale lorsque l'utilisateur clique en dehors de la modale */
-            window.addEventListener("click", (event) => {
-                if (event.target === modal) {
-                    modal.style.display = "none";
-                }
-            });
-        } catch (error) {
-            console.error('Erreur lors de la manipulation de la modale :', error);
-        }
-    }
 
     /******  Vérifier si l'utilisateur est connecté *******/
     if (localStorage.getItem("token")) {
@@ -197,20 +112,145 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = "index.html";
         });
         btnEdit.addEventListener("click", () => {
-            modal.style.display = "none";
-          
             displayModalWithWorks();
-           
         });
         addPhoto();
-
-    } else {
+    }
+    else {
         loginButton.innerHTML = '<a href="login.html">login</a>';
         modal.style.display = "none";
     }
     uploadFile();
 
+
+   
+      /******* Fonction pour manipuler la modale et afficher les travaux ******/
+      async function displayModalWithWorks() {
+        try {
+            const worksData = await fetchWorksData();
+            addWorksToModal(worksData);
+            modal.style.display = "block";
+
+            /* Fermer la modale lorsque l'utilisateur clique sur le bouton de fermeture */
+            closeButton.addEventListener("click", () => {
+                modal.style.display = "none";
+            });
+
+            /* Fermer la modale lorsque l'utilisateur clique en dehors de la modale */
+            window.addEventListener("click", (event) => {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        } catch (error) {
+            console.error('Erreur lors de la manipulation de la modale :', error);
+        }
+    }
+
+
+    async function addWorksToModal(works) {
+        const galerie = document.querySelector('.gallery-modal');
+        galerie.innerHTML = '';
+
+        works.forEach(work => {
+            const figure = document.createElement('figure');
+            const image = document.createElement('img');
+            image.src = work.imageUrl;
+            image.classList.add("redimensionner");
+            figure.appendChild(image);
+
+            /* Créez l'icône de la poubelle*/
+            const p = document.createElement("p");
+            const icon = document.createElement("i");
+            icon.classList.add("fa-solid", "fa-trash-can");
+            p.appendChild(icon);
+
+            icon.addEventListener("click", async () => {
+                try {
+                    const workId = work.id;
+                    /* Envoyez une requête DELETE à votre API pour supprimer l'image*/
+                    const response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                        }
+                    });
+                    if (response.ok) {
+                        figure.remove();
+                        worksGallery();
+                    } else {
+                        console.error('Erreur lors de la suppression de l\'image.');
+                    }
+                } catch (error) {
+                    console.error('Erreur lors de la suppression de l\'image :', error);
+                }
+            });
+
+            figure.appendChild(p);
+            galerie.appendChild(figure);
+        });
+    }
+ /*****  Fonction pour récupérer les données des travaux depuis l'API ******/
+ async function fetchWorksData() {
+    try {
+        const response = await fetch('http://localhost:5678/api/works');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Erreur de récupération des données des travaux :', error);
+        throw error;
+    }
+}
+
 });
+/******* fonction pour ajouter une nouvelle figure *******/
+async function addNewWork(e) {
+    e.preventDefault();
+    const title = titleInput.value;
+    const categoryId = categorieInput.value;
+    const image = photoInput.files[0];
+   
+    if (title === "" || categoryId === "" || image === undefined) {
+        alert("Merci de remplir tous les champs");
+        return;
+    } else if (!await fetchCategories() === categoryId) {
+        alert("Merci de choisir une catégorie valide");
+        return;
+    } else {
+        try {
+            const formData = new FormData();
+            formData.append("title", title);
+            formData.append("category", categoryId);
+            formData.append("image", image);
+
+            const response = await fetch("http://localhost:5678/api/works", {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+                body: formData,
+            });
+
+            if (response.status === 201) {
+                alert("Projet ajouté avec succès :)");
+                worksGallery();
+
+            } else if (response.status === 400) {
+                alert("Merci de remplir tous les champs");
+            } else if (response.status === 500) {
+                alert("Erreur serveur");
+            } else if (response.status === 401) {
+                alert("Vous n'êtes pas autorisé à ajouter un projet");
+                window.location.href = "login.html";
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+}
+
 
 /*******  fonction pour ajouter une photo ********/
 async function addPhoto() {
@@ -244,55 +284,6 @@ async function addPhoto() {
         modal.style.display = "none";
     });
     fetchCategories();
-   
-}
-/******* fonction pour ajouter une nouvelle figure *******/
-async function addNewWork(e) {
-    e.preventDefault();
-    const title = titleInput.value;
-    const categoryId = categorieInput.value;
-    const image = photoInput.files[0];
-    const maxSizeImage = 4 * 1024 * 1024;
-
-    if (title === "" || categoryId === "" || image === undefined) {
-        alert("Merci de remplir tous les champs");
-        return;
-    } else if (!await fetchCategories() === categoryId) {
-        alert("Merci de choisir une catégorie valide");
-        return;
-    } else {
-        try {
-            const formData = new FormData();
-            formData.append("title", title);
-            formData.append("category", categoryId);
-            formData.append("image", image);
-
-            const response = await fetch("http://localhost:5678/api/works", {
-                method: "POST",
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
-                body: formData,
-            });
-
-            if (response.status === 201) {
-                alert("Projet ajouté avec succès :)");
-                worksGallery();
-                         
-            } else if (response.status === 400) {
-                alert("Merci de remplir tous les champs");
-            } else if (response.status === 500) {
-                alert("Erreur serveur");
-            } else if (response.status === 401) {
-                alert("Vous n'êtes pas autorisé à ajouter un projet");
-                window.location.href = "login.html";
-            }
-        }
-        catch (error) {
-            console.log(error);
-        }
-       
-    }
 }
 
 async function fetchCategories() {
@@ -320,16 +311,16 @@ async function fetchCategories() {
     }
 }
 
-/*** **** fonction pour telecharger le fichier sous forme jpg ou png *******/
+/******* fonction pour telecharger le fichier sous forme jpg ou png *******/
 function uploadFile(e) {
     if (photoInput.files && photoInput.files.length > 0) {
         const iconFile = document.querySelector(".fa-image");
         iconFile.style.display = "block";
         const btnFile = document.querySelector(".rectangle label");
         btnFile.style.display = "block";
-        const picture = document.querySelector(".photo");
         const infoFile = document.querySelector(".rectangle p");
         infoFile.style.display = "block";
+        const picture = document.querySelector(".photo");
         picture.src = "";
         const [image] = e.files;
         /* Mettez à jour l'aperçu de l'image*/
@@ -338,6 +329,7 @@ function uploadFile(e) {
         iconFile.style.display = "none";
         btnFile.style.display = "none";
         infoFile.style.display = "none";
+
     }
 }
 
