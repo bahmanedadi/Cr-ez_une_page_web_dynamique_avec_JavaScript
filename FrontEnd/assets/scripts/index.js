@@ -7,7 +7,7 @@ const closeButton = document.querySelector(".close");
 const loginButton = document.getElementById("loginButton");
 const titleInput = document.getElementById('title');
 const photoInput = document.getElementById('photo');
-const categorieInput = document.getElementById('categorie');
+const categoryInput = document.getElementById('categorie');
 const submitButton = document.getElementById('submitButton');
 worksGallery();
 
@@ -18,8 +18,8 @@ async function worksGallery() {
         if (!response.ok) {
             throw new Error('La requête pour les travaux a échoué');
         }
-        const data = await response.json();
-        worksData = data;
+       worksData = await response.json();
+       
         addWorksToGallery(worksData);
 
     } catch (error) {
@@ -59,10 +59,8 @@ function createCategory(categories) {
         bouton.classList.add('btn');
         bouton.addEventListener('click', function () {
             const selectedCategory = categorie.name;
-
             /* Filtrer les travaux en fonction de la catégorie sélectionnée */
             const worksFiltres = worksData.filter(work => work.category.name === selectedCategory);
-
             /* Afficher les travaux filtrés dans la galerie */
             addWorksToGallery(worksFiltres);
             const allButtons = document.querySelectorAll('.btn');
@@ -75,8 +73,8 @@ function createCategory(categories) {
     });
 }
 
-const boutonTous = document.querySelector('.btn_1');
-boutonTous.addEventListener('click', function () {
+const btnTous = document.querySelector('.btn_1');
+btnTous.addEventListener('click', function () {
     /* Afficher tous les travaux dans la galerie (sans filtre par catégorie) */
     addWorksToGallery(worksData);
 
@@ -86,7 +84,7 @@ boutonTous.addEventListener('click', function () {
         button.classList.remove('active');
     });
     /* Ajouter la classe "active" uniquement au bouton cliqué */
-    boutonTous.classList.add('active');
+    btnTous.classList.add('active');
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -122,8 +120,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     uploadFile();
 
-
-   
       /******* Fonction pour manipuler la modale et afficher les travaux ******/
       async function displayModalWithWorks() {
         try {
@@ -146,7 +142,6 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Erreur lors de la manipulation de la modale :', error);
         }
     }
-
 
     async function addWorksToModal(works) {
         const galerie = document.querySelector('.gallery-modal');
@@ -208,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
 async function addNewWork(e) {
     e.preventDefault();
     const title = titleInput.value;
-    const categoryId = categorieInput.value;
+    const categoryId = categoryInput.value;
     const image = photoInput.files[0];
    
     if (title === "" || categoryId === "" || image === undefined) {
@@ -258,16 +253,19 @@ async function addPhoto() {
     const modalContent = document.querySelector(".gallery-modal");
     const galleryEdit = document.querySelector(".gallery-edit")
     const modalContentH = document.querySelector(".modal-content h2")
+
     btnAddPhoto.addEventListener('click', () => {
         modalContent.style.display = "none";
         galleryEdit.style.display = "block"
         btnAddPhoto.style.display = "none";
         modalContentH.style.display = "none"
+
         const btnReturn = document.createElement("a");
         btnReturn.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
         galleryEdit.appendChild(btnReturn);
         btnReturn.classList.add('arrow-left');
         btnReturn.style.display = 'block';
+
         btnReturn.addEventListener('click', () => {
             galleryEdit.style.display = "none";
             modalContentH.style.display = "block";
@@ -275,9 +273,12 @@ async function addPhoto() {
             btnAddPhoto.style.display = "block";
         });
     });
+
     titleInput.addEventListener('input', updateSubmitButton);
     photoInput.addEventListener('change', updateSubmitButton);
-    categorieInput.addEventListener('change', updateSubmitButton);
+    categoryInput.addEventListener('change', updateSubmitButton);
+   
+   
     submitButton.addEventListener("click", async (e) => {
         e.preventDefault();
         await addNewWork(e);
@@ -293,17 +294,17 @@ async function fetchCategories() {
             throw new Error('La requête des catégories a échoué');
         }
         const categories = await response.json();
-        categorieInput.innerHTML = '';
+        categoryInput.innerHTML = '';
         const defaultOption = document.createElement('option');
         defaultOption.value = '';
         defaultOption.textContent = '--veuillez choisir une categorie--';
-        categorieInput.appendChild(defaultOption);
+        categoryInput.appendChild(defaultOption);
         /* Ajouter les catégories de l'API*/
         categories.forEach(category => {
             const option = document.createElement('option');
             option.value = category.id;
             option.textContent = category.name;
-            categorieInput.appendChild(option);
+            categoryInput.appendChild(option);
         });
     } catch (error) {
         console.error('Erreur de récupération des catégories :', error);
@@ -311,7 +312,7 @@ async function fetchCategories() {
     }
 }
 
-/******* fonction pour telecharger le fichier sous forme jpg ou png *******/
+/******* fonction pour telecharger le fichier  *******/
 function uploadFile(e) {
     if (photoInput.files && photoInput.files.length > 0) {
         const iconFile = document.querySelector(".fa-image");
@@ -329,7 +330,6 @@ function uploadFile(e) {
         iconFile.style.display = "none";
         btnFile.style.display = "none";
         infoFile.style.display = "none";
-
     }
 }
 
@@ -337,9 +337,9 @@ function uploadFile(e) {
 function updateSubmitButton() {
     const titleFilled = titleInput.value.trim() !== '';
     const photoFilled = photoInput.files && photoInput.files[0];
-    const categorieFilled = categorieInput.value !== '';
+    const categoryFilled = categoryInput.value !== '';
 
-    if (titleFilled && photoFilled && categorieFilled) {
+    if (titleFilled && photoFilled && categoryFilled) {
         submitButton.disabled = false;
         submitButton.style.backgroundColor = " #1D6154";
     } else {
@@ -347,3 +347,4 @@ function updateSubmitButton() {
         submitButton.style.backgroundColor = " #A7A7A7";
     }
 }
+
